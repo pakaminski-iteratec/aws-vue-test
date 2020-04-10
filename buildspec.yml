@@ -3,7 +3,7 @@ version: 0.2
 phases:
   install:
     commands:
-      - npm install -g node
+  #    - npm install -g node
   pre_build:
     commands:
       - npm install
