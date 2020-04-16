@@ -59,6 +59,7 @@ phases:
       #- aws-iam-authenticator help
 
       #- aws-iam-authenticator init
+      kubectl get nodes
 
       - kubectl get svc
 
