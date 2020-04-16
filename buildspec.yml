@@ -54,10 +54,12 @@ phases:
       - unset AWS_SESSION_TOKEN
 
       - aws sts get-caller-identity
+
+      - kubectl config view
       
       - kubectl apply -f aws-auth-cm.yaml 
 
-      - aws eks --region eu-central-1 update-kubeconfig --name eks-cluster --role-arn arn:aws:iam::378582414855:role/iteratecPKEksCodeBuildkubectlRole
+      # - aws eks --region eu-central-1 update-kubeconfig --name eks-cluster --role-arn arn:aws:iam::378582414855:role/iteratecPKEksCodeBuildkubectlRole
 
       - kubectl config get-contexts
       
