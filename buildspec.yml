@@ -53,6 +53,8 @@ phases:
       
       - aws eks --region eu-central-1 update-kubeconfig --name eks-cluster --role-arn arn:aws:iam::378582414855:role/iteratecPKEksCodeBuildkubectlRole
 
+      - aws-iam-authenticator help
+
       - kubectl --kubeconfig ./config.yml
 
       - kubectl config view
