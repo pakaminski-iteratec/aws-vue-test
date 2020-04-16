@@ -5,7 +5,7 @@ metadata:
   namespace: kube-system
 data:
   mapRoles: |
-    - rolearn: arn:aws:iam::378582414855:role/service-role/codebuild-Vue-test-service-role
+    - rolearn: arn:aws:iam::378582414855:role/iteratecPKEksCodeBuildkubectlRole"
       username: system:node:{{EC2PrivateDNSName}}
       groups:
         - system:bootstrappers
