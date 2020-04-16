@@ -31,8 +31,8 @@ phases:
       - aws --version
       - $(aws ecr get-login --region eu-central-1 --no-include-email)
 
-      - mkdir ~/.kube/
-      - cp config.yml ~/.kube/config
+      #- mkdir ~/.kube/
+      #- cp config.yml ~/.kube/config
 
 
     finally:
@@ -51,8 +51,8 @@ phases:
 
       - aws sts get-caller-identity
    
-#      - aws eks --region eu-central-1 update-kubeconfig --name eks-cluster --role-arn arn:aws:iam::378582414855:role/iteratecPKEksCodeBuildkubectlRole
-      - kubectl apply -f aws-auth-cm.yaml 
+      - aws eks --region eu-central-1 update-kubeconfig --name eks-cluster  
+#      - kubectl apply -f aws-auth-cm.yaml 
 
       #- aws eks get-token --cluster-name eks-cluster 
 
