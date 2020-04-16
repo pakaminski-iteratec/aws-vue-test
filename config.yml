@@ -23,4 +23,4 @@ users:
         - "-i"
         - "eks-cluster"
         - "-r"
-        - "Iteratec-Test-MK"
+        - "arn:aws:iam::378582414855:role/iteratecPKEksCodeBuildkubectlRole"
