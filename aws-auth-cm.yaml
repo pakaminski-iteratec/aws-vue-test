@@ -9,5 +9,6 @@ data:
       #  username: system:node:{{EC2PrivateDNSName}}
       username: build
       groups:
+        - system:masters
         - system:bootstrappers
         - system:nodes
