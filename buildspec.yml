@@ -51,7 +51,7 @@ phases:
 
       - aws sts get-caller-identity
 
-      -  aws sts assume-role --role-arn "arn:aws:iam::378582414855:role/iteratecPKEksCodeBuildkubectlRole"
+      -  aws sts assume-role --role-arn "arn:aws:iam::378582414855:role/iteratecPKEksCodeBuildkubectlRole"  --role-session-name="test-pk"
 
       - aws sts get-caller-identity
 
