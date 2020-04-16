@@ -1,0 +1,46 @@
+pipeline:
+    artifactStore:
+      location: codepipeline-eu-central-1-132021108413
+      type: S3
+    name: PK-TEST-YAML
+    roleArn: arn:aws:iam::378582414855:role/service-role/CodePipeline-Test
+    stages:
+    - actions:
+      - actionTypeId:
+          category: Source
+          owner: ThirdParty
+          provider: GitHub
+          version: '1'
+        configuration:
+          Branch: master
+          OAuthToken: TOKEN!!!
+          Owner: Kszemi
+          PollForSourceChanges: 'false'
+          Repo: AWS-CodeBuild
+        inputArtifacts: []
+        name: Source
+        namespace: SourceVariables
+        outputArtifacts:
+        - name: SourceArtifact
+        region: eu-central-1
+        runOrder: 1
+      name: Source
+    - actions:
+      - actionTypeId:
+          category: Build
+          owner: AWS
+          provider: CodeBuild
+          version: '1'
+        configuration:
+          ProjectName: AWS-TE
+        inputArtifacts:
+        - name: SourceArtifact
+        name: Build
+        namespace: BuildVariables
+        outputArtifacts:
+        - name: BuildArtifact
+        region: eu-central-1
+        runOrder: 1
+      name: Build
+    version: 1
+  

@@ -1,25 +1,76 @@
 version: 0.2
-
 phases:
   install:
     commands:
-  #    - npm install -g node
+
+#      - echo testing stuff
+#      - aws-iam-authenticator verify -t k8s-aws-v1.really_long_token -i cluster-name
+
+      - echo Entered the install phase...
+      - apt-get update -y
+#      - apt-get install -y maven
+
+      - curl -o aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.12.7/2019-03-27/bin/linux/amd64/aws-iam-authenticator
+      - chmod +x ./aws-iam-authenticator
+      - mkdir -p ~/bin && cp ./aws-iam-authenticator ~/bin/aws-iam-authenticator && export PATH=~/bin:$PATH
+      - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+      - chmod +x kubectl
+      - mv ./kubectl /usr/local/bin/kubectl
+      - wget https://storage.googleapis.com/kubernetes-helm/helm-v2.14.0-linux-amd64.tar.gz -O helm.tar.gz; tar -xzf helm.tar.gz
+      - chmod +x ./linux-amd64/helm
+      - mv ./linux-amd64/helm /usr/local/bin/helm
+
+
+    finally:
+      - echo This always runs even if the update or install command fails 
   pre_build:
     commands:
-      - npm install
+      - echo Entered the pre_build phase...
+
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - $(aws ecr get-login --region eu-central-1 --no-include-email)
+
+      - mkdir ~/.kube/
+      - cp config.yml ~/.kube/config
+
+
+    finally:
+      - echo This always runs even if the login command fails 
   build:
-    commands:
-      - npm build
+#    commands:
+#      - echo Entered the build phase...
+#      - echo Build started on `date`
+#      - mvn install
+#      - mvn package
+    finally:
+      - echo This always runs even if the install command fails
   post_build:
     commands:
       - echo Entered the post_build phase...
 
-      - aws ecr get-login-password --region eu-central-1 | docker login --username AWS  --password-stdin 378582414855.dkr.ecr.eu-central-1.amazonaws.com
+#      - aws ecr get-login-password --region eu-central-1 | docker login --username AWS  --password-stdin 378582414855.dkr.ecr.eu-central-1.amazonaws.com
 
-      - docker build -t aws-test-vue .
+#      - docker build -t aws-test .
 
-      - docker tag aws-test-vue:latest 378582414855.dkr.ecr.eu-central-1.amazonaws.com/aws_ecr_test:latest
+#      - docker tag aws-test:latest 378582414855.dkr.ecr.eu-central-1.amazonaws.com/aws_ecr_test:latest
 
-      - docker push 378582414855.dkr.ecr.eu-central-1.amazonaws.com/aws_ecr_test:latest
+#      - docker push 378582414855.dkr.ecr.eu-central-1.amazonaws.com/aws_ecr_test:latest
+
+      - kubectl config get-contexts
+
+#      - aws --region eu-central-1 eks update-kubeconfig --name eks-cluster --role-arn arn:aws:iam::378582414855:role/service-role/Iteratec-Test-MK
+
+      - kubectl get svc
+
+      - kubectl get nodes
+
+      - kubectl apply -f aws-auth-cm.yaml
+
+      - cd helm && helm install awstest --set image.repository=378582414855.dkr.ecr.eu-central-1.amazonaws.com/aws_ecr_test --set image.tag=latest .
 
       - echo Build completed on `date`
+
+
+
+#  aws ecr get-login-password --region eu-central-1 | docker login --username AWS  --password-stdin 378582414855.dkr.ecr.eu-central-1.amazonaws.com
