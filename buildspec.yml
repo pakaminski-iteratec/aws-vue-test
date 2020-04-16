@@ -56,6 +56,8 @@ phases:
       - aws sts get-caller-identity
 
       - kubectl config view
+
+      - kubectl get -n kube-system configmap/aws-auth -o yaml
       
       - kubectl apply -f aws-auth-cm.yaml 
 
