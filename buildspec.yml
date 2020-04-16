@@ -7,7 +7,7 @@ phases:
 #      - aws-iam-authenticator verify -t k8s-aws-v1.really_long_token -i cluster-name
 
       - echo Entered the install phase...
-      - apt-get update -y
+#      - apt-get update -y
 #      - apt-get install -y maven
 
       - curl -o aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.12.7/2019-03-27/bin/linux/amd64/aws-iam-authenticator
