@@ -6,7 +6,8 @@ metadata:
 data:
   mapRoles: |
     - rolearn: arn:aws:iam::378582414855:role/iteratecPKEksCodeBuildkubectlRole
-      username: system:node:{{EC2PrivateDNSName}}
+      #  username: system:node:{{EC2PrivateDNSName}}
+      username: build
       groups:
         - system:bootstrappers
         - system:nodes
