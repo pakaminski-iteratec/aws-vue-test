@@ -55,6 +55,8 @@ phases:
 
       - aws-iam-authenticator help
 
+      - aws-iam-authenticator init
+
       - kubectl get svc
 
       - kubectl --kubeconfig ./config.yml
