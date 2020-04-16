@@ -31,8 +31,8 @@ phases:
       - aws --version
       - $(aws ecr get-login --region eu-central-1 --no-include-email)
 
-      - mkdir ~/.kube/
-      - cp config.yml ~/.kube/config
+#      - mkdir ~/.kube/
+#      - cp config.yml ~/.kube/config
 
 
     finally:
