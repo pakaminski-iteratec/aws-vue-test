@@ -3,6 +3,7 @@ version: 0.2
 env:
   variables:
     cluster: "viper"
+    ECR_URL: "378582414855.dkr.ecr.eu-central-1.amazonaws.com"
  
 
 phases:
@@ -23,23 +24,20 @@ phases:
     commands:
       - echo Entered the post_build phase...
 
-      - aws ecr get-login-password --region eu-central-1 | docker login --username AWS  --password-stdin 378582414855.dkr.ecr.eu-central-1.amazonaws.com
+      - aws ecr get-login-password --region eu-central-1 | docker login --username AWS  --password-stdin ${ECR_URL}
 
       - aws ecr describe-repositories --repository-names ${cluster}/${APP_NAME} || aws ecr create-repository --repository-name ${cluster}/${APP_NAME}
 
       - docker build -t ${APP_NAME} .
 
-      - docker tag ${APP_NAME}:latest 378582414855.dkr.ecr.eu-central-1.amazonaws.com/${cluster}/${APP_NAME}:latest
+      - docker tag ${APP_NAME}:latest ${ECR_URL}/${cluster}/${APP_NAME}:latest
 
-      - docker tag ${APP_NAME} 378582414855.dkr.ecr.eu-central-1.amazonaws.com/${cluster}/${APP_NAME}:${VERSION}
+      - docker tag ${APP_NAME} ${ECR_URL}/${cluster}/${APP_NAME}:${VERSION}
 
-      - docker push 378582414855.dkr.ecr.eu-central-1.amazonaws.com/${cluster}/${APP_NAME}
+      - docker push ${ECR_URL}/${cluster}/${APP_NAME}
 
       - echo Build completed on `date`
 
-      - 
-
-    
      
 
 artifacts:
