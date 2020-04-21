@@ -12,9 +12,9 @@ phases:
   #    - npm install -g node
   pre_build:
     commands:
+      - ls -las
       - export VERSION = sed 's/.*"version" "\(.*\)".*/\1/;t;d' package.json
       - echo ${VERSION}
-      - ls -las
       - npm install
   build:
     commands:
