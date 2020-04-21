@@ -16,7 +16,9 @@ phases:
 
       - aws ecr get-login-password --region eu-central-1 | docker login --username AWS  --password-stdin 378582414855.dkr.ecr.eu-central-1.amazonaws.com
 
-      - aws ecr create-repository --repository-name viper/viper_forntend_app_test
+      # - aws ecr create-repository --repository-name viper/viper_forntend_app_test
+
+      - aws ecr describe-repositories --repository-names viper/viper_forntend_app_test || aws ecr create-repository --repository-name viper/viper_forntend_app_test
 
       - docker build -t viper_forntend_app_test .
 
