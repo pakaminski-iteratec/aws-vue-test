@@ -27,8 +27,6 @@ phases:
 
       - docker tag ${appName}:latest 378582414855.dkr.ecr.eu-central-1.amazonaws.com/${cluster}/${appName}:latest
 
-      - sed 's/.*"version": "\(.*\)".*/\1/;t;d' ./package.json
-
       - docker tag ${appName} 378582414855.dkr.ecr.eu-central-1.amazonaws.com/${cluster}/${appName}:1.2.3
 
       - docker push 378582414855.dkr.ecr.eu-central-1.amazonaws.com/${cluster}/${appName}
