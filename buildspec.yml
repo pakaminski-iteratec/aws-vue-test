@@ -22,7 +22,7 @@ phases:
 
       - docker tag viper_forntend_app_test 378582414855.dkr.ecr.eu-central-1.amazonaws.com/viper_forntend_app_test:1.2.3
 
-      - docker push 378582414855.dkr.ecr.eu-central-1.amazonaws.com/aws_ecr_test:latest
+      - docker push 378582414855.dkr.ecr.eu-central-1.amazonaws.com/viper_forntend_app_test
 
       - echo Build completed on `date`
     
