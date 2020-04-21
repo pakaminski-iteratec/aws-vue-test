@@ -31,6 +31,9 @@ phases:
       - aws --version
       - $(aws ecr get-login --region eu-central-1 --no-include-email)
 
+
+      - npm install
+
       #- mkdir ~/.kube/
       #- cp config.yml ~/.kube/config
 
@@ -41,8 +44,7 @@ phases:
    commands:
      - echo Entered the build phase...
      - echo Build started on `date`
-     - mvn install
-     - mvn package
+     - npm build
     finally:
       - echo This always runs even if the install command fails
   post_build:
