@@ -13,8 +13,10 @@ phases:
   pre_build:
     commands:
       - ls -las
-      - export VERSION=$(sed 's/.*"version" "\(.*\)".*/\1/;t;d' package.json)
-      - echo VERSION
+      - export VERSION=$(sed 's/.*"version" "\(.*\)".*/\1/;t;d' package.json)      
+      - echo $VERSION
+      - export VERSION33="123"
+      - echo $VERSION33
       - npm install
   build:
     commands:
