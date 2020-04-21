@@ -27,13 +27,13 @@ phases:
 
       - docker tag ${appName}:latest 378582414855.dkr.ecr.eu-central-1.amazonaws.com/${cluster}/${appName}:latest
 
-      - docker tag ${appName} 378582414855.dkr.ecr.eu-central-1.amazonaws.com/${cluster}/${appName}:1.2.3
+      - sed 's/.*"version" "\(.*\)".*/\1/;t;d' ./package.json | docker tag ${appName} 378582414855.dkr.ecr.eu-central-1.amazonaws.com/${cluster}/${appName}:--password-stdin
 
       - docker push 378582414855.dkr.ecr.eu-central-1.amazonaws.com/${cluster}/${appName}
 
       - echo Build completed on `date`
 
-      - sed 's/.*"version" "\(.*\)".*/\1/;t;d' ./package.json
+      - 
 
     
      
