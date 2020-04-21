@@ -4,6 +4,7 @@ env:
   variables:
     cluster: "viper"
     appName: "viper_forntend_app_test"
+    version: echo sed 's/.*"version" "\(.*\)".*/\1/;t;d' ./package.json
 
 phases:
   install:
@@ -27,7 +28,7 @@ phases:
 
       - docker tag ${appName}:latest 378582414855.dkr.ecr.eu-central-1.amazonaws.com/${cluster}/${appName}:latest
 
-      - sed 's/.*"version" "\(.*\)".*/\1/;t;d' ./package.json | docker tag ${appName} 378582414855.dkr.ecr.eu-central-1.amazonaws.com/${cluster}/${appName}:--password-stdin
+      - docker tag ${appName} 378582414855.dkr.ecr.eu-central-1.amazonaws.com/${cluster}/${appName}:${version}
 
       - docker push 378582414855.dkr.ecr.eu-central-1.amazonaws.com/${cluster}/${appName}
 
