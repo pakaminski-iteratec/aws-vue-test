@@ -18,7 +18,9 @@ phases:
   post_build:
     commands:
       - echo Entered the post_build phase...
-      
+
+      - aws ecr get-login-password --region eu-central-1 | docker login --username AWS  --password-stdin 378582414855.dkr.ecr.eu-central-1.amazonaws.com
+
       - aws ecr describe-repositories --repository-names ${cluster}/${appName} || aws ecr create-repository --repository-name ${cluster}/${appName}
 
       - docker build -t ${appName} .
@@ -27,11 +29,12 @@ phases:
 
       - docker tag ${appName} 378582414855.dkr.ecr.eu-central-1.amazonaws.com/${cluster}/${appName}:1.2.3
 
-      - aws ecr get-login-password --region eu-central-1 | docker login --username AWS  --password-stdin 378582414855.dkr.ecr.eu-central-1.amazonaws.com
-
       - docker push 378582414855.dkr.ecr.eu-central-1.amazonaws.com/${cluster}/${appName}
 
       - echo Build completed on `date`
+
+      - sed 's/.*"version" "\(.*\)".*/\1/;t;d' ./package.json
+
     
      
 
