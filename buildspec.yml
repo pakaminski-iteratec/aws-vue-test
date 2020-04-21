@@ -54,6 +54,8 @@ phases:
 
       - aws eks --region eu-central-1 update-kubeconfig --name new-eks-cluster --role-arn arn:aws:iam::378582414855:role/new-eks-role
 
+      - kubectl apply -f aws-auth-cm.yaml
+
       - kubectl get configmap -n kube-system aws-auth -o yaml
 
       - kubectl get svc
