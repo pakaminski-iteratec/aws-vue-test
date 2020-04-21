@@ -14,7 +14,7 @@ phases:
     commands:
       - ls -las
       - export VERSION=$(sed 's/.*"version" "\(.*\)".*/\1/;t;d' package.json)
-      - echo ${VERSION}
+      - echo VERSION
       - npm install
   build:
     commands:
