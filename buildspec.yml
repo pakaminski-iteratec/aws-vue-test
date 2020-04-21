@@ -17,6 +17,8 @@ phases:
       - echo $VERSION
       - export VERSION33="123"
       - echo $VERSION33
+      - echo $(sed 's/.*"version" "\(.*\)".*/\1/;t;d' package.json)      
+      - echo $(sed 's/.*"version" "\(.*\)".*/\1/;t;d' ./package.json)      
       - npm install
   build:
     commands:
