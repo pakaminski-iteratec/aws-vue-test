@@ -4,7 +4,7 @@ env:
   variables:
     cluster: "viper"
     appName: "viper_forntend_app_test"
-    version: echo sed 's/.*"version" "\(.*\)".*/\1/;t;d' ./package.json
+ 
 
 phases:
   install:
@@ -12,6 +12,8 @@ phases:
   #    - npm install -g node
   pre_build:
     commands:
+      - export VERSION = sed 's/.*"version" "\(.*\)".*/\1/;t;d' ./package.json
+      - echo ${VERSION}
       - npm install
   build:
     commands:
@@ -28,7 +30,7 @@ phases:
 
       - docker tag ${appName}:latest 378582414855.dkr.ecr.eu-central-1.amazonaws.com/${cluster}/${appName}:latest
 
-      - docker tag ${appName} 378582414855.dkr.ecr.eu-central-1.amazonaws.com/${cluster}/${appName}:${version}
+      - docker tag ${appName} 378582414855.dkr.ecr.eu-central-1.amazonaws.com/${cluster}/${appName}:${VERSION}
 
       - docker push 378582414855.dkr.ecr.eu-central-1.amazonaws.com/${cluster}/${appName}
 
