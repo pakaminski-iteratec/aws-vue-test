@@ -18,7 +18,7 @@ phases:
     - mv ./kubectl /usr/local/bin/kubectl
   pre_build:
     commands:
-      - ls -las
+      # Set app name and app version
       - export VERSION=$(node -p "require('./package.json').version")      
       - export APP_NAME=$(node -p "require('./package.json').name")    
   
@@ -52,7 +52,7 @@ phases:
 
       - aws sts get-caller-identity
 
-      - aws eks --region eu-central-1 update-kubeconfig --name new-eks-cluster --role-arn arn:aws:iam::378582414855:role/service-role/codebuild-viper-frontend-app-service-role
+      - aws eks --region eu-central-1 update-kubeconfig --name new-eks-cluster --role-arn arn:aws:iam::378582414855:role/new-eks-role
 
       - kubectl get svc
 
