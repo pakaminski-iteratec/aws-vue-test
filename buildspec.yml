@@ -22,6 +22,9 @@ phases:
       - export VERSION=$(node -p "require('./package.json').version")      
       - export APP_NAME=$(node -p "require('./package.json').name")    
   
+      - mkdir ~/.kube/
+      - cp config.yml ~/.kube/config
+
      # - npm install
   build:
     commands:
