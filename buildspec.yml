@@ -58,7 +58,7 @@ phases:
 
    #   - kubectl get configmap -n kube-system aws-auth -o yaml
 
-        kubectl config get-contexts
+      -  kubectl config get-contexts
 
       - kubectl get svc
 
