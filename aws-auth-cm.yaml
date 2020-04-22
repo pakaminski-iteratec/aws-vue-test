@@ -5,8 +5,8 @@ metadata:
   namespace: kube-system
 data:
   mapRoles: |
-    - rolearn: arn:aws:iam::378582414855:role/service-role/codebuild-viper-frontend-app-service-role
+    - rolearn: arn:aws:sts::378582414855:assumed-role/codebuild-viper-frontend-app-service-role/codebuild-session-role
       groups:
          - system:bootstrappers
          - system:nodes
-         - system:master     
+         - system:master             
