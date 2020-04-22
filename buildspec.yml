@@ -52,11 +52,13 @@ phases:
 
       - aws sts get-caller-identity
 
-      - aws eks --region eu-central-1 update-kubeconfig --name new-eks-cluster 
+   #   - aws eks --region eu-central-1 update-kubeconfig --name new-eks-cluster 
 
    #   - kubectl apply -f aws-auth-cm.yaml
 
    #   - kubectl get configmap -n kube-system aws-auth -o yaml
+
+        kubectl config get-contexts
 
       - kubectl get svc
 
