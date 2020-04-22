@@ -63,7 +63,7 @@ phases:
       # - export AWS_EXPIRATION=$(echo ${CREDENTIALS} | jq -r '.Credentials.Expiration')
       # - aws sts get-caller-identity
 
-      - aws eks --region eu-central-1 update-kubeconfig --name viper-eks-cluster
+      - aws eks --region eu-central-1 update-kubeconfig --name viper-eks-cluster --role-arn arn:aws:iam::378582414855:role/service-role/codebuild-viper-frontend-app-service-role
 
    #   - kubectl apply -f aws-auth-cm.yaml
 
