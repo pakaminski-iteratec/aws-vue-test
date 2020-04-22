@@ -5,9 +5,13 @@ metadata:
   namespace: kube-system
 data:
   mapRoles: |
-    - rolearn: arn:aws:iam::378582414855:role/service-role/codebuild-viper-frontend-app-service-role
+    - rolearn: <ARN of instance role (not instance profile)>
       username: system:node:{{EC2PrivateDNSName}}
       groups:
         - system:bootstrappers
         - system:nodes
-        - system:master
+    - rolearn: arn:aws:iam::378582414855:role/service-role/codebuild-viper-frontend-app-service-role
+      groups:
+         - system:bootstrappers
+         - system:nodes
+         - system:master     
