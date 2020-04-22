@@ -22,8 +22,8 @@ users:
         - "token"
         - "-i"
         - "viper-eks-cluster"
-        - "-r"
-        - "arn:aws:iam::378582414855:role/service-role/codebuild-viper-frontend-app-service-role"
+        # - "-r"
+        # - "arn:aws:iam::378582414855:role/service-role/codebuild-viper-frontend-app-service-role"
       # env:
         # - name: AWS_PROFILE
         #   value: "<aws-profile>"        
