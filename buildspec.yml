@@ -53,9 +53,9 @@ phases:
 
       - aws eks --region eu-central-1 update-kubeconfig --name viper-eks-cluster 
 
-      - kubectl -n kube-system delete deployment tiller-deploy 
+      #- kubectl -n kube-system delete deployment tiller-deploy 
       
-      - kubectl -n kube-system delete service/tiller-deploy
+      #- kubectl -n kube-system delete service/tiller-deploy
       
       - helm --init
 
