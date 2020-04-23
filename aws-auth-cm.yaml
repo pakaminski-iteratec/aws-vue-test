@@ -5,17 +5,8 @@ metadata:
   namespace: kube-system
 data: 
     mapRoles: | 
-      - rolearn: arn:aws:iam::11122223333:role/EKS-Worker-NodeInstanceRole-1I00GBC9U4U7B 
-        username: system:node:{{EC2PrivateDNSName}} 
-        groups: 
-          - system:bootstrappers 
-          - system:nodes 
-    mapUsers: | 
-      - userarn: arn:aws:iam::378582414855:role/viper-pka-ec2
+      - rolearn: arn:aws:iam::378582414855:role/codebuild-viper-frontend-app-service-role
         username: designated_user 
         groups: 
-          - system:masters
-      - userarn: arn:aws:iam::378582414855:role/codebuild-viper-frontend-app-service-role
-        username: designated_user 
-        groups: 
-           - system:masters      
+          - system:masters        
+          
