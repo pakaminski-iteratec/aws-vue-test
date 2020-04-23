@@ -61,7 +61,7 @@ phases:
       
       - helm init
 
-      - cd helm && helm install ${APP_NAME} --set image.repository=${ECR_URL}/${cluster}/${APP_NAME}:latest --set image.tag=latest .
+      - cd helm && helm install ${APP_NAME} . --set image.repository=${ECR_URL}/${cluster}/${APP_NAME}:latest --set image.tag=latest 
 
      
 
