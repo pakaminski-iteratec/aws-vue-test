@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aws-auth
+  namespace: kube-system
+data:
+  mapRoles: |
+    - rolearn: <ARN of instance role (not instance profile)>
+      username: system:node:{{EC2PrivateDNSName}}
+      groups:
+        - system:bootstrappers
+        - system:nodes
+    - rolearn: arn:aws:iam::378582414855:role/service-role/codebuild-viper-frontend-app-service-role
+      groups:
+         - system:bootstrappers
+         - system:nodes
+         - system:masters     
+    - rolearn: arn:aws:iam::378582414855:role/viper-pka-ec2
+      username: system:node:{{EC2PrivateDNSName}}
+      groups:
+      - system:bootstrappers
+      - system:nodes
+      - system:masters     
+    - rolearn: arn:aws:iam::378582414855:role/viper-pka-ec2/codebuild-session-role
+      username: system:node:{{EC2PrivateDNSName}}
+      groups:
+      - system:bootstrappers
+      - system:nodes
+      - system:masters     
+    - rolearn: arn:aws:sts::378582414855:assumed-role/viper-pka-ec2/codebuild-session-role
+      username: system:node:{{EC2PrivateDNSName}}
+      groups:
+      - system:bootstrappers
+      - system:nodes
+      - system:masters     
+  mapUsers: | 
+    - userarn: arn:aws:iam::378582414855:role/viper-pka-ec2
+      username: system:node:{{EC2PrivateDNSName}}
+      groups:
+      - system:bootstrappers
+      - system:nodes
+      - system:masters  
+    - userarn: arn:aws:iam::378582414855:role/viper-pka-ec2
+      username: system:node:{{EC2PrivateDNSName}}
+      groups:
+      - system:bootstrappers
+      - system:nodes
+      - system:masters     
+    - userarn: arn:aws:iam::378582414855:role/viper-pka-ec2/codebuild-session-role
+      username: system:node:{{EC2PrivateDNSName}}
+      groups:
+      - system:bootstrappers
+      - system:nodes
+      - system:masters     
+    - userarn: arn:aws:sts::378582414855:assumed-role/viper-pka-ec2/codebuild-session-role
+      username: system:node:{{EC2PrivateDNSName}}
+      groups:
+      - system:bootstrappers
+      - system:nodes
+      - system:masters  
