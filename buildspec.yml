@@ -25,17 +25,13 @@ phases:
       # Set app name and app version
       - export APP_VERSION=$(node -p "require('./package.json').version")      
       - export APP_NAME=$(node -p "require('./package.json').name")    
-  
-      #- mkdir ~/.kube/
-      #- cp config.yml ~/.kube/config
-
-     # - npm install
+      
   build:
     commands:
       - npm build
   post_build:
     commands:
-      - echo Entered the post_build phase...
+      - echo Entered ECS phase...
 
       - aws ecr get-login-password --region eu-central-1 | docker login --username AWS  --password-stdin ${ECR_URL}
 
@@ -49,17 +45,19 @@ phases:
 
       - docker push ${ECR_URL}/${cluster}/${APP_NAME}
 
-      - echo Build completed on `date`
+      - echo ECS phase completed.
 
-
-
-
-   #################################
-      - echo Entered the kubectl phase...
+      - echo Entered EKS phase...
 
       - aws sts get-caller-identity
 
       - aws eks --region eu-central-1 update-kubeconfig --name viper-eks-cluster 
+
+      - kubectl -n kube-system delete deployment tiller-deploy 
+      
+      - kubectl -n kube-system delete service/tiller-deploy
+      
+      - helm --init
 
       - cd helm && helm install ${APP_NAME} --set image.repository=${ECR_URL}/${cluster}/${APP_NAME}:latest --set image.tag=latest .
 
