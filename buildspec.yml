@@ -57,7 +57,7 @@ phases:
       
       #- kubectl -n kube-system delete service/tiller-deploy
       
-      - helm --init
+      #- helm --init
 
       - cd helm && helm install ${APP_NAME} --set image.repository=${ECR_URL}/${cluster}/${APP_NAME}:latest --set image.tag=latest .
 
