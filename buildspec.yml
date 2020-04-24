@@ -4,25 +4,20 @@ env:
   variables:
     CONTEXT: "viper"
     ECR_URL: "378582414855.dkr.ecr.eu-central-1.amazonaws.com"
+    EKS_CLUSTER: "viper-eks-cluster "
+    AWS_REGION: "eu-central-1 "
  
 
 phases:
   install:
     commands:
-  #    - npm install -g node
-    # - curl -o aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.12.7/2019-03-27/bin/linux/amd64/aws-iam-authenticator
-    # - chmod +x ./aws-iam-authenticator
-    # - mkdir -p ~/bin && cp ./aws-iam-authenticator ~/bin/aws-iam-authenticator && export PATH=~/bin:$PATH
-    # - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-    # - chmod +x kubectl
-    # - mv ./kubectl /usr/local/bin/kubectl
-
       - wget https://storage.googleapis.com/kubernetes-helm/helm-v2.14.0-linux-amd64.tar.gz -O helm.tar.gz; tar -xzf helm.tar.gz
       - chmod +x ./linux-amd64/helm
       - mv ./linux-amd64/helm /usr/local/bin/helm
-  pre_build:
+
+      pre_build:
     commands:
-      # Set app name and app version
+
       - export APP_VERSION=$(node -p "require('./package.json').version")      
       - export APP_NAME=$(node -p "require('./package.json').name")    
       
@@ -33,7 +28,7 @@ phases:
     commands:
       - echo Entered ECS phase...
 
-      - aws ecr get-login-password --region eu-central-1 | docker login --username AWS  --password-stdin ${ECR_URL}
+      - aws ecr get-login-password --region  ${AWS_REGION} | docker login --username AWS  --password-stdin ${ECR_URL}
 
       - aws ecr describe-repositories --repository-names ${CONTEXT}/${APP_NAME} || aws ecr create-repository --repository-name ${CONTEXT}/${APP_NAME}
 
@@ -51,7 +46,7 @@ phases:
 
       - aws sts get-caller-identity
 
-      - aws eks --region eu-central-1 update-kubeconfig --name viper-eks-cluster 
+      - aws eks --region ${AWS_REGION} update-kubeconfig --name ${EKS_CLUSTER}
 
       - kubectl -n kube-system get deployment
       
