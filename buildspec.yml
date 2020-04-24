@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    cluster: "viper"
+    CONTEXT: "viper"
     ECR_URL: "378582414855.dkr.ecr.eu-central-1.amazonaws.com"
  
 
@@ -35,15 +35,15 @@ phases:
 
       - aws ecr get-login-password --region eu-central-1 | docker login --username AWS  --password-stdin ${ECR_URL}
 
-      - aws ecr describe-repositories --repository-names ${cluster}/${APP_NAME} || aws ecr create-repository --repository-name ${cluster}/${APP_NAME}
+      - aws ecr describe-repositories --repository-names ${CONTEXT}/${APP_NAME} || aws ecr create-repository --repository-name ${CONTEXT}/${APP_NAME}
 
       - docker build -t ${APP_NAME} .
 
-      - docker tag ${APP_NAME}:latest ${ECR_URL}/${cluster}/${APP_NAME}:latest
+      - docker tag ${APP_NAME}:latest ${ECR_URL}/${CONTEXT}/${APP_NAME}:latest
 
-      - docker tag ${APP_NAME} ${ECR_URL}/${cluster}/${APP_NAME}:${APP_VERSION}
+      - docker tag ${APP_NAME} ${ECR_URL}/${CONTEXT}/${APP_NAME}:${APP_VERSION}
 
-      - docker push ${ECR_URL}/${cluster}/${APP_NAME}
+      - docker push ${ECR_URL}/${CONTEXT}/${APP_NAME}
 
       - echo ECS phase completed.
 
@@ -61,7 +61,12 @@ phases:
       
       - helm init
 
-      - cd helm && helm install ${APP_NAME} . --set image.repository=${ECR_URL}/${cluster}/${APP_NAME}:latest --set image.tag=latest 
+      - echo  "APP_NAME:" ${APP_NAME}
+      - echo  "ECR_URL:" ${ECR_URL}
+      - echo  "CONTEXT:" ${CONTEXT}
+      - echo  "APP_NAME" ${APP_NAME}
+
+      - cd helm && helm install ${APP_NAME} . --set image.repository=${ECR_URL}/${CONTEXT}/${APP_NAME}:latest --set image.tag=latest 
 
      
 
