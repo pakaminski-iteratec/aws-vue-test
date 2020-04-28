@@ -3,9 +3,9 @@ version: 0.2
 phases:
   install:
     commands:
-      - wget https://storage.googleapis.com/kubernetes-helm/helm-v2.14.0-linux-amd64.tar.gz -O helm.tar.gz; tar -xzf helm.tar.gz
-      - chmod +x ./linux-amd64/helm
-      - mv ./linux-amd64/helm /usr/local/bin/helm
+      - curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+      - chmod 700 get_helm.sh
+      - ./get_helm.sh
   pre_build:
     commands:
       # Set app name and app version
@@ -39,13 +39,9 @@ phases:
 
       - aws eks --region ${AWS_REGION} update-kubeconfig --name ${EKS_CLUSTER}
 
-      - kubectl -n kube-system get deployment
-      
-      - helm init
-
-      - kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
-
-      - cd helm && helm install --name ${APP_NAME} . --set image.repository=${ECR_URL}/${CONTEXT}/${APP_NAME}:latest --set image.tag=latest 
+      - kubectl -n kube-system get deployment    
+  
+      -  cd helm && helm install ${APP_NAME} . --set image.repository=${ECR_URL}/${CONTEXT}/${APP_NAME}:latest --set image.tag=latest
      
 
 artifacts:
