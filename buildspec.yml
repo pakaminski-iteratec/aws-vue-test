@@ -17,9 +17,9 @@ phases:
       - npm build
   post_build:
     commands:
-      - echo Entered ECS phase...
+      - echo Entered ECS phase...!!!!
       
-      - echo Entered ECS phase...
+      - echo Entered ECS phase...!!!!@@##$$@!@
 
       - aws ecr get-login-password --region  ${AWS_REGION} | docker login --username AWS  --password-stdin ${ECR_URL}
 
